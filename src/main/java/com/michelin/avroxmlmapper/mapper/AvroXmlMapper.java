@@ -26,96 +26,71 @@ import static com.michelin.avroxmlmapper.utility.GenericUtils.*;
 import java.lang.reflect.InvocationTargetException;
 import javax.xml.transform.TransformerException;
 import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.w3c.dom.Document;
 
 /** Utility Class for XML parsing (Xpath) */
 public final class AvroXmlMapper {
-    private static final String GET_CLASS_SCHEMA_METHOD = "getClassSchema";
 
     private AvroXmlMapper() {}
 
     /**
-     * Converts an XML string into a SpecificRecordBase object. The mapping is based on the "xpath" property defined for
+     * Converts an XML string into a GenericRecord object. The mapping is based on the "xpath" property defined for
      * each of the fields in the original avsc file.
      *
      * <p>See README.md for more details.
      *
      * @param stringDocument The XML string to convert
-     * @param clazz The Avro object to convert to
-     * @param <T> The type of the Avro object
+     * @param schema The Avro schema to convert to
      * @return The SpecificRecordBase object.
-     * @throws NoSuchMethodException If the method getClassSchema is not found
-     * @throws InvocationTargetException If the method getClassSchema cannot be invoked
-     * @throws IllegalAccessException If the method getClassSchema cannot be accessed
      */
-    public static <T extends SpecificRecordBase> T convertXmlStringToAvro(String stringDocument, Class<T> clazz)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Schema schema =
-                (Schema) (clazz.getDeclaredMethod(GET_CLASS_SCHEMA_METHOD).invoke(null));
-        var document = stringToDocument(stringDocument, xmlNamespaces(schema));
-        return XmlToAvroUtils.convert(
-                document.getDocumentElement(),
-                document.getDocumentElement(),
-                clazz,
-                getNamespaceContext(document),
-                schema.getNamespace(),
-                XPATH_DEFAULT);
+    public static GenericRecord convertXmlStringToAvro(String stringDocument, Schema schema) {
+        return convertXmlStringToAvro(stringDocument, schema, XPATH_DEFAULT);
     }
 
     /**
-     * Converts an XML string into a SpecificRecordBase object. The mapping is based on the chosen xpathSelector
+     * Converts an XML string into a GenericRecord object. The mapping is based on the chosen xpathSelector
      * property defined for each of the fields in the original avsc file. See README.md for more details.
      *
      * @param stringDocument The XML string to convert
-     * @param clazz The Avro object to convert to
+     * @param schema The Avro schema to convert to
      * @param xpathSelector The xpathSelector property used to search for the xpathMapping in the Avro definition
-     * @param <T> The type of the Avro object
      * @return the SpecificRecordBase object.
-     * @throws NoSuchMethodException If the method getClassSchema is not found
-     * @throws InvocationTargetException If the method getClassSchema cannot be invoked
-     * @throws IllegalAccessException If the method getClassSchema cannot be accessed
      */
-    public static <T extends SpecificRecordBase> T convertXmlStringToAvro(
-            String stringDocument, Class<T> clazz, String xpathSelector)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Schema schema =
-                (Schema) (clazz.getDeclaredMethod(GET_CLASS_SCHEMA_METHOD).invoke(null));
+    public static GenericRecord convertXmlStringToAvro(String stringDocument, Schema schema, String xpathSelector)  {
         var document = stringToDocument(stringDocument, xmlNamespaces(schema));
         return XmlToAvroUtils.convert(
                 document.getDocumentElement(),
                 document.getDocumentElement(),
-                clazz,
+                schema,
                 getNamespaceContext(document),
                 schema.getNamespace(),
                 xpathSelector);
     }
 
     /**
-     * Converts an XML string into a SpecificRecordBase object. The mapping is based on the chosen xpathSelector
+     * Converts an XML string into a GenericRecord object. The mapping is based on the chosen xpathSelector
      * property defined for each of the fields in the original avsc file. See README.md for more details.
      *
      * @param stringDocument The XML string to convert
-     * @param clazz The Avro object to convert to
+     * @param schema The Avro schema to convert to
      * @param xpathSelector The xpathSelector property used to search for the xpathMapping in the Avro definition
      * @param xmlNamespacesSelector Name of the variable defining the xmlNamespaces of the avsc file that needs to be
      *     used for unifying namespace definitions
-     * @param <T> The type of the Avro object
      * @return the SpecificRecordBase object.
-     * @throws NoSuchMethodException If the method getClassSchema is not found
-     * @throws InvocationTargetException If the method getClassSchema cannot be invoked
-     * @throws IllegalAccessException If the method getClassSchema cannot be accessed
      */
-    public static <T extends SpecificRecordBase> T convertXmlStringToAvro(
-            String stringDocument, Class<T> clazz, String xpathSelector, String xmlNamespacesSelector)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Schema schema =
-                (Schema) (clazz.getDeclaredMethod(GET_CLASS_SCHEMA_METHOD).invoke(null));
+    public static GenericRecord convertXmlStringToAvro(
+        String stringDocument,
+        Schema schema,
+        String xpathSelector,
+        String xmlNamespacesSelector
+    ) {
         var document = stringToDocument(stringDocument, xmlNamespaces(schema, xmlNamespacesSelector));
         return XmlToAvroUtils.convert(
                 document.getDocumentElement(),
                 document.getDocumentElement(),
-                clazz,
+                schema,
                 getNamespaceContext(document),
                 schema.getNamespace(),
                 xpathSelector);
