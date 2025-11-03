@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.michelin</groupId>
-    <artifactId>avro-xml-mapper</artifactId>
-    <version>0.1.6-SNAPSHOT</version>
+    <groupId>com.4sh</groupId>
+    <artifactId>ilp-avro-xml-mapper</artifactId>
+    <version>0.1.6</version>
     <packaging>jar</packaging>
-    <name>avro-xml-mapper</name>
+    <name>ilp-avro-xml-mapper</name>
     <description>Turn XML into Avro and vice versa.</description>
-    <url>https://github.com/michelin/avro-xml-mapper</url>
+    <url>https://github.com/4sh/ilp-avro-xml-mapper</url>
 
     <licenses>
         <license>
@@ -41,10 +41,17 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/michelin/avro-xml-mapper.git</connection>
-        <developerConnection>scm:git:https://github.com/michelin/avro-xml-mapper.git</developerConnection>
-        <url>scm:git:https://github.com/michelin/avro-xml-mapper.git</url>
+        <connection>scm:git:https://github.com/4sh/ilp-avro-xml-mapper.git</connection>
+        <developerConnection>scm:git:https://github.com/4sh/ilp-avro-xml-mapper.git</developerConnection>
+        <url>scm:git:https://github.com/4sh/ilp-avro-xml-mapper.git</url>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>artifact-registry</id>
+            <url>artifact-registry://europe-west1-maven.pkg.dev/chep-cma/ilp-avro-xml-mapper</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <avro.version>1.12.1</avro.version>
