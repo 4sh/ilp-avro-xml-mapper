@@ -23,7 +23,6 @@ import static com.michelin.avroxmlmapper.constants.AvroXmlMapperConstants.XPATH_
 import static com.michelin.avroxmlmapper.mapper.AvroToXmlUtils.createDocumentFromAvro;
 import static com.michelin.avroxmlmapper.utility.GenericUtils.*;
 
-import java.lang.reflect.InvocationTargetException;
 import javax.xml.transform.TransformerException;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
@@ -36,8 +35,8 @@ public final class AvroXmlMapper {
     private AvroXmlMapper() {}
 
     /**
-     * Converts an XML string into a GenericRecord object. The mapping is based on the "xpath" property defined for
-     * each of the fields in the original avsc file.
+     * Converts an XML string into a GenericRecord object. The mapping is based on the "xpath" property defined for each
+     * of the fields in the original avsc file.
      *
      * <p>See README.md for more details.
      *
@@ -50,15 +49,15 @@ public final class AvroXmlMapper {
     }
 
     /**
-     * Converts an XML string into a GenericRecord object. The mapping is based on the chosen xpathSelector
-     * property defined for each of the fields in the original avsc file. See README.md for more details.
+     * Converts an XML string into a GenericRecord object. The mapping is based on the chosen xpathSelector property
+     * defined for each of the fields in the original avsc file. See README.md for more details.
      *
      * @param stringDocument The XML string to convert
      * @param schema The Avro schema to convert to
      * @param xpathSelector The xpathSelector property used to search for the xpathMapping in the Avro definition
      * @return the SpecificRecordBase object.
      */
-    public static GenericRecord convertXmlStringToAvro(String stringDocument, Schema schema, String xpathSelector)  {
+    public static GenericRecord convertXmlStringToAvro(String stringDocument, Schema schema, String xpathSelector) {
         var document = stringToDocument(stringDocument, xmlNamespaces(schema));
         return XmlToAvroUtils.convert(
                 document.getDocumentElement(),
@@ -70,8 +69,8 @@ public final class AvroXmlMapper {
     }
 
     /**
-     * Converts an XML string into a GenericRecord object. The mapping is based on the chosen xpathSelector
-     * property defined for each of the fields in the original avsc file. See README.md for more details.
+     * Converts an XML string into a GenericRecord object. The mapping is based on the chosen xpathSelector property
+     * defined for each of the fields in the original avsc file. See README.md for more details.
      *
      * @param stringDocument The XML string to convert
      * @param schema The Avro schema to convert to
@@ -81,11 +80,7 @@ public final class AvroXmlMapper {
      * @return the SpecificRecordBase object.
      */
     public static GenericRecord convertXmlStringToAvro(
-        String stringDocument,
-        Schema schema,
-        String xpathSelector,
-        String xmlNamespacesSelector
-    ) {
+            String stringDocument, Schema schema, String xpathSelector, String xmlNamespacesSelector) {
         var document = stringToDocument(stringDocument, xmlNamespaces(schema, xmlNamespacesSelector));
         return XmlToAvroUtils.convert(
                 document.getDocumentElement(),

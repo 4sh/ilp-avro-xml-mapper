@@ -210,8 +210,7 @@ public final class XmlToAvroUtils {
             String baseNamespace,
             Schema.Field field,
             Schema fieldType,
-            String xpathSelector
-    ) {
+            String xpathSelector) {
         Schema elementSchema = fieldType.getElementType();
         String xpath = XPathFormatter.format(field.getProp(xpathSelector));
 
@@ -223,12 +222,7 @@ public final class XmlToAvroUtils {
                 for (Node elementNode :
                         asList(xPathNodeListEvaluation(fullNode, orphanNode, xpath, namespaceContext))) {
                     listRecords.add(convert(
-                            elementNode,
-                            elementNode,
-                            elementSchema,
-                            namespaceContext,
-                            baseNamespace,
-                            xpathSelector));
+                            elementNode, elementNode, elementSchema, namespaceContext, baseNamespace, xpathSelector));
                 }
                 message.put(field.name(), listRecords);
             } else if (schema.isPresent() && schema.get().getType() == Schema.Type.STRING) { // An array of string
@@ -307,8 +301,7 @@ public final class XmlToAvroUtils {
             String baseNamespace,
             Schema.Field field,
             Schema fieldType,
-            String xpathSelector
-    ) {
+            String xpathSelector) {
         String xpath = XPathFormatter.format(field.getProp(xpathSelector));
 
         if (xpath != null) {
